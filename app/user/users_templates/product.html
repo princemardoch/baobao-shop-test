@@ -1,33 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produit</title>
     <style>
-       /*@font-face {
+        /*@font-face {
             font-family: 'Inter';
             src: url('fonts/Inter-VariableFont.woff2') format('woff2'),
                 url('fonts/Inter-VariableFont.woff') format('woff');
             font-weight: 100 900;
             font-style: normal;
         }*/
-        
+
         @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
-        *{
+        * {
             margin: 0;
             padding: 0;
-            
+
         }
+
         body,
-        nav, .product_card, .product_info{
+        nav,
+        .product_card,
+        .product_info {
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        body{
+        body {
             width: 100%;
 
             flex-direction: column;
@@ -35,32 +39,39 @@
             font-family: "Inter", sans-serif;
             font-size: 1.2em;
         }
-        .main_part{
+
+        .main_part {
             width: 320px;
-            
+
             padding: 20px;
             flex-direction: column;
-            
+
         }
 
-        .nav_bar{
+        .nav_bar {
             height: 5%;
             width: 100%;
             padding-top: 20px;
         }
-        .product_card{
+
+        .product_card {
             width: 100%;
             flex-direction: column;
         }
-        .product_info{
+
+        .product_info {
             font-size: 0.7em;
             flex-wrap: wrap;
         }
-        .product_info_card{
+
+        .product_info_card {
             width: 100%;
             padding: 10px;
         }
-        .stock, .dely_info, .brand{
+
+        .stock,
+        .dely_info,
+        .brand {
             background-color: rgba(0, 0, 0, 0.05);
             padding: 5px 10px;
             border-radius: 10px;
@@ -74,16 +85,17 @@
             justify-content: center;
             align-items: center;
         }
-        .dely_info{
+
+        .dely_info {
             border: 2px solid #FFB800;
             opacity: 1;
         }
-        
     </style>
 </head>
+
 <body>
     <style>
-        body{
+        body {
             background-color: rgba(0, 0, 0, 0.045);
         }
     </style>
@@ -96,33 +108,33 @@
     </nav>
     <section class="main_part">
         <style>
-            .main_part{
+            .main_part {
                 background-color: white;
                 margin-top: 15px;
                 border-radius: 20px;
 
-                box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
+                box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
             }
         </style>
 
 
         <div class="product_card">
             <style>
-                .product_card{
+                .product_card {
                     height: 98%;
                 }
             </style>
             <div class="product_img_card">
                 <style>
-                    .product_img_card{
+                    .product_img_card {
                         width: 300px;
                         height: 300px;
-                        background-image: url('product.png');
+                        background-image: url("{{ url_for( 'user.static', filename='product.png' ) }}");
                         background-size: cover;
                     }
                 </style>
             </div>
-            
+
             <div class="product_info_card">
                 <div class="product_info">
                     <div class="stock"> 80 en stock </div>
@@ -132,7 +144,7 @@
 
                 <div class="product_title">
                     <style>
-                        .product_title{
+                        .product_title {
                             font-size: 1.2em;
 
                             width: 100%;
@@ -148,7 +160,7 @@
 
                 <div class="variations_div">
                     <style>
-                        .variations_div{
+                        .variations_div {
                             width: 100%;
                             display: flex;
                             justify-content: center;
@@ -156,20 +168,22 @@
                             flex-direction: column;
                             margin-top: 20px;
                         }
-                        .card_label{
+
+                        .card_label {
                             margin-bottom: 5px;
                         }
+
                         .variations_group {
                             display: flex;
                             justify-content: center;
                             text-align: center;
                             flex-wrap: wrap;
                         }
-                
+
                         .variations_group input[type="radio"] {
                             display: none;
                         }
-                
+
                         .variations_group label {
                             margin: 5px;
                             padding: 5px;
@@ -186,23 +200,24 @@
                             justify-content: center;
                             align-items: center;
                         }
-                
-                        .variations_group input[type="radio"]:checked + label {
+
+                        .variations_group input[type="radio"]:checked+label {
                             background-color: rgba(255, 94, 0, 0.047);
                             border: 2px solid rgba(255, 157, 0, 0.651);
                         }
                     </style>
+                    <form action="/create_order" id="create_order" method="POST"></form>
                     <p class="card_label">Stockage:</p>
                     <div class="variations_group">
                         <input type="radio" id="option1" name="storage">
                         <label for="option1">64 Go</label>
-                
+
                         <input type="radio" id="option2" name="storage" checked>
                         <label for="option2">128 Go</label>
-                
+
                         <input type="radio" id="option3" name="storage">
                         <label for="option3">256 Go</label>
-                
+
                         <input type="radio" id="option4" name="storage">
                         <label for="option4">512 Go</label>
                     </div>
@@ -210,27 +225,28 @@
 
                 <div class="price_card">
                     <style>
-                        .price_card{
+                        .price_card {
                             width: 100%;
                             display: flex;
                             justify-content: space-between;
                             margin-top: 20px;
                         }
-                        .product_card .price{
-                            padding: 15px 15px; 
+
+                        .product_card .price {
+                            padding: 15px 15px;
                             margin-right: 5px;
 
                             background-color: #e8e8e890;
                             border-radius: 10px;
-                            
+
                             font-weight: 800;
                             text-align: center;
                         }
 
-                        .quantity input{
+                        .quantity input {
                             background-color: unset;
                             border: none;
-                            
+
                             width: 80px;
 
                             font-size: 1.2em;
@@ -238,17 +254,18 @@
 
                             outline: none;
 
-                            padding: 15px 15px; 
+                            padding: 15px 15px;
                             margin-right: 5px;
 
                             background-color: #e8e8e85a;
                             border-radius: 10px;
                             border: 1px solid rgba(0, 0, 0, 0.462);
-                            
+
                             font-weight: 800;
                             text-align: center;
                         }
-                        .quantity input:focus{
+
+                        .quantity input:focus {
                             outline: #ffb7008e 3px solid;
                             outline-offset: 2px;
                         }
@@ -262,11 +279,12 @@
                 </div>
 
                 <div>
-                    <button class="order_btn">
+
+                    <button type="submit" class="order_btn" name="order_btn" form="create_order">
                         <style>
-                            .order_btn{
+                            .order_btn {
                                 background-color: #FFB800;
-                                
+
                                 border: none;
                                 border-radius: 15px;
 
@@ -283,15 +301,16 @@
                                 cursor: pointer;
                             }
 
-                            .order_btn div{
+                            .order_btn div {
                                 width: 90%;
                                 padding-left: 30px;
                             }
-                            .order_btn svg{
+
+                            .order_btn svg {
                                 margin-right: 5px;
                             }
 
-                            .order_now{
+                            .order_now {
                                 font-size: 1.8em;
                                 font-weight: 800;
 
@@ -299,10 +318,12 @@
                                 justify-content: center;
                                 align-items: center;
                             }
-                            .price_btn{
+
+                            .price_btn {
                                 font-size: 0.9em;
                             }
-                            .order_btn:hover{
+
+                            .order_btn:hover {
                                 background-color: #eca900;
                             }
                         </style>
@@ -310,16 +331,22 @@
                             <p class="price_btn"> Prix : 23 000F </p>
                             <p class="order_now"> Commander </p>
                         </div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-arrow-right">
+                            <path d="M5 12h14" />
+                            <path d="m12 5 7 7-7 7" />
+                        </svg>
                     </button>
+                    </form>
                 </div>
             </div>
         </div>
 
     </section>
-    <footer> 
+    <footer>
         <style>
-            footer{
+            footer {
                 height: 50px;
                 font-size: 0.5em;
                 opacity: 0.5;
@@ -328,34 +355,40 @@
                 align-items: center;
             }
         </style>
-        TeamLPM, Tous droits réservés 
+        TeamLPM, Tous droits réservés
     </footer>
     <style>
         @media screen and (max-width: 390px) {
-            .main_part{
+            .main_part {
                 width: 90%;
                 height: 750px;
             }
-            body{
+
+            body {
                 background-color: white;
             }
-            .main_part{
+
+            .main_part {
                 background-color: unset;
                 box-shadow: unset;
             }
-            .order_btn{
+
+            .order_btn {
                 height: 60px;
             }
         }
-        @media screen and (max-width: 333px){
-            body{
+
+        @media screen and (max-width: 333px) {
+            body {
                 font-size: 1em;
             }
-            .product_img_card{
+
+            .product_img_card {
                 width: 250px;
                 height: 250px;
             }
         }
     </style>
 </body>
+
 </html>

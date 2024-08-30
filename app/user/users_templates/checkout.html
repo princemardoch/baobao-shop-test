@@ -106,10 +106,10 @@
 
             <p class="big_icon"> 🚚 </p>
             <p class="page_title"> Formulaire de livraison </p>
-            <img class="arrow_icon" src="icons/arrow.svg" alt="">
+            <img class="arrow_icon" src="{{ url_for('user.static', filename='icons/arrow.svg') }}" alt="">
         </div>
 
-        <form class="form_card">
+        <form class="form_card" action="/checkout" method="post">
             <style>
                 .form_card {
                     width: 280px;
@@ -158,6 +158,7 @@
                 .indicatif_number{
                     font-weight: 600;
                     margin-left: 10px;
+                    font-size: 1.2em;
                 }
                 .form_card .dely_place{
                     width: 100%;
@@ -230,9 +231,9 @@
                 }
             </style>
             <div class="wa_number">
-                <img class="wa_icon" src="icons/WA_icon.svg" alt="" width="30px">
-                <p class="indicatif_number">225</p>
-                <input type="tel">
+                <img class="wa_icon" src="{{ url_for('user.static', filename='icons/WA_icon.svg' ) }}" alt="" width="30px">
+                <p class="indicatif_number">+225</p>
+                <input type="tel" name="user_phone_number" value="{{user_phone_number}}">
             
                 <script>
                     document.querySelector('.wa_number input[type="tel"]').addEventListener('input', function (e) {
@@ -252,13 +253,13 @@
                 </script>
             </div>
             
-            <input class="dely_place" type="text" placeholder="Lieu de livraison📍">
+            <input class="dely_place" type="text" name="user_location" value="{{user_location}}" placeholder="Lieu de livraison📍">
 
             <div class="method_billing">
                 <p> Paiement a la livraison  </p>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             </div>
-            <button class="oder_btn" type="submit"> <p>Commander</p> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> </button>
+            <button class="oder_btn" name="checkout_btn" type="submit"> <p>Commander</p> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> </button>
         </form>
 
     </section>
