@@ -8,11 +8,11 @@ from config import Config
 products_db = Config.DB.products
 orders_db = Config.DB.orders
 
-logging_setup()
 
 class Product:
     @staticmethod
     def create_table():
+        
         try:
             with sqlite3.connect(products_db) as conn:
                 cursor = conn.cursor()
@@ -57,10 +57,7 @@ class Product:
 class DBScript:
     @staticmethod
     def write_into_orders_db(user_phone_number, user_location):
-        if not isinstance(user_phone_number, int):
-            return 'user_phone_number_not_int'
-        if not isinstance(user_location, str):
-            return 'user_location_not_valied'
+        logging_setup()
         try:
             with sqlite3.connect(orders_db) as conn:
                 cursor = conn.cursor()
@@ -89,6 +86,7 @@ class Order:
         
     @staticmethod
     def valid_checkout_form(user_phone_number, user_location):
+        logging_setup()
         try:
             phone_str = ''.join(str(user_phone_number).split())
             
@@ -107,3 +105,4 @@ class Order:
         except Exception as e:
             logging.critical(f"Erreur lors de la validation du formulaire : {str(e)}")
             return 'unknown_error'
+        
