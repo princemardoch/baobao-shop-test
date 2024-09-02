@@ -2,7 +2,7 @@ import secrets
 
 from flask import Flask, session
 
-from logging_setup import logging_
+from logging_setup import logging_setup
 
 def create_app():
     app = Flask(__name__)
@@ -11,7 +11,7 @@ def create_app():
     @app.before_request
     def make_session_permanent():
         session.permanent = True
-        logging_.setup()
+        logging_setup()
 
     app.config['SECRET_KEY'] = secrets.token_urlsafe(30)
     app.config['SESSION_COOKIE_SECURE'] = True
@@ -19,11 +19,7 @@ def create_app():
     app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
     from .user.userr import user
-    from .admin.adminr import admin
-    from .auth.authr import auth
 
-    app.register_blueprint(auth, url_prefix='/auth')
     app.register_blueprint(user, url_prefix='/')
-    app.register_blueprint(admin, url_prefix='/admin')
 
     return app

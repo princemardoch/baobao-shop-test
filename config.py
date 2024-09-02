@@ -3,5 +3,5 @@ class Config:
         save_file = 'logging.log'
 
     class DB:
-        products = 'products.db'
-        orders = 'orders.db'
+        products = 'dbs/products.db'
+        orders = 'dbs/orders.db'

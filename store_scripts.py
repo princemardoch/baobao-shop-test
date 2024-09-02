@@ -1,12 +1,14 @@
+import re
 import logging
 import sqlite3
 
-from logging_setup import logging_
+from logging_setup import logging_setup
 from config import Config
 
 products_db = Config.DB.products
+orders_db = Config.DB.orders
 
-
+logging_setup()
 
 class Product:
     @staticmethod
@@ -60,7 +62,7 @@ class DBScript:
         if not isinstance(user_location, str):
             return 'user_location_not_valied'
         try:
-            with sqlite3.connect('orders.db') as conn:
+            with sqlite3.connect(orders_db) as conn:
                 cursor = conn.cursor()
                 cursor.execute(''' INSERT INTO orders (user_phone_number, user_location) 
                                VALUES(?,?)''', (user_phone_number, user_location))
@@ -88,21 +90,20 @@ class Order:
     @staticmethod
     def valid_checkout_form(user_phone_number, user_location):
         try:
-            if user_phone_number and user_location:
-
-                if not user_phone_number.isdigit():
-                    return 'user_phone_number_not_int'
-                user_phone_number = ''.join(user_phone_number.split())
-                user_phone_number =  int(f"225{user_phone_number}")
-                
-                if not isinstance(user_phone_number, int):
-                    return 'user_phone_number_not_int'
-                if not isinstance(user_location, str):
-                    return 'user_location_not_valid'
-                DBScript.write_into_orders_db(user_phone_number, user_location)
-                return 'success_valid_checkout_form'
-            return 'user_phone_number_not_int' if user_phone_number is None else 'user_location_not_valid'
-        except Exception as e:
-            logging.critical(e)
-            return 'unknown_error'
+            phone_str = ''.join(str(user_phone_number).split())
+            
+            if not re.match(r'^\d{8,}$', phone_str):
+                return 'invalid_phone_number'
+            
+            if not isinstance(user_location, str) or not user_location.strip():
+                return 'invalid_location'
+            
+            formatted_phone = int(f"225{phone_str}")
+            
+            DBScript.write_into_orders_db(formatted_phone, user_location.strip())
+            
+            return 'success_valid_checkout_form'
         
+        except Exception as e:
+            logging.critical(f"Erreur lors de la validation du formulaire : {str(e)}")
+            return 'unknown_error'
