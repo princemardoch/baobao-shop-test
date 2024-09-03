@@ -30,6 +30,7 @@ def create_order():
 
 @user.route('/checkout', methods=['GET', 'POST'])
 def checkout():
+    session['success_checkout'] = 'success_checkout'
     if request.method == 'POST' and 'checkout_btn' in request.form:
         session['create_order'] = 'create_order'
 
@@ -60,7 +61,7 @@ def checkout():
 
 @user.route('/success', methods=['GET'])
 def success():
-    if 'success_checkout' in session:
-        session.clear()
+    if session.get('success_checkout'):
+        logging.error('-------------------------------------------------------')
         return render_template('success.html')
-    return redirect(url_for('user.product'))
+    return render_template('success.html')
