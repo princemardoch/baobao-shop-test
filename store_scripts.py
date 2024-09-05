@@ -2,8 +2,9 @@ import re
 import logging
 import sqlite3
 
-from logging_setup import logging_setup
 from config import Config
+from logging_setup import logging_setup
+from send_email import send_email
 
 products_db = Config.DB.products
 orders_db = Config.DB.orders
@@ -98,9 +99,12 @@ class Order:
             
             formatted_phone = int(f"225{phone_str}")
             
-            DBScript.write_into_orders_db(formatted_phone, user_location.strip())
-            
-            return 'success_valid_checkout_form'
+            email_body = f'Numero de telephone : {formatted_phone}\n- Lieu de livraison : {user_location.strip()}'
+            send_email_func = send_email(email_body)
+            if send_email_func == 'success':
+                return 'success_valid_checkout_form'
+            else:
+                return 'unknown_error'
         
         except Exception as e:
             logging.critical(f"Erreur lors de la validation du formulaire : {str(e)}")
@@ -117,3 +121,5 @@ def read_in_logging():
     with open('logging.log', 'r') as file:
         line_list = file.readlines()
         return line_list
+    
+

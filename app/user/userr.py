@@ -74,8 +74,6 @@ def success():
 
 
 
-
-
 @user.route('/orders_list')
 def orders():
     try:

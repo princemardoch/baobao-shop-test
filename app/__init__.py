@@ -2,7 +2,6 @@ import secrets
 
 from flask import Flask, session
 
-from logging_setup import logging_setup
 
 def create_app():
     app = Flask(__name__)
@@ -11,7 +10,6 @@ def create_app():
     @app.before_request
     def make_session_permanent():
         session.permanent = True
-        logging_setup()
 
     app.config['SECRET_KEY'] = secrets.token_urlsafe(30)
     app.config['SESSION_COOKIE_SECURE'] = True
