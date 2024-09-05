@@ -105,4 +105,15 @@ class Order:
         except Exception as e:
             logging.critical(f"Erreur lors de la validation du formulaire : {str(e)}")
             return 'unknown_error'
-        
+    
+def view_all_orders():
+    with sqlite3.connect(orders_db) as conn:
+        cursor = conn.cursor()
+        rows = cursor.execute('SELECT * FROM orders')
+        results = rows.fetchall()
+        return results
+    
+def read_in_logging():
+    with open('logging.log', 'r') as file:
+        line_list = file.readlines()
+        return line_list

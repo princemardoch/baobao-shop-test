@@ -1,10 +1,16 @@
 import logging
+import secrets
 
 from flask import Blueprint, redirect, url_for, render_template, request, flash, session
 
-from store_scripts import Order
+from store_scripts import Order, view_all_orders, read_in_logging
 
 user = Blueprint('user', __name__, template_folder='users_templates', static_folder='user_static')
+
+@user.before_request
+def make_session_permanent():
+        session.permanent = True
+
 
 @user.route('/')
 def index():
@@ -61,7 +67,28 @@ def checkout():
 
 @user.route('/success', methods=['GET'])
 def success():
-    if session.get('success_checkout'):
-        logging.error('-------------------------------------------------------')
+    if 'success_checkout' in session:
+        session.clear()
         return render_template('success.html')
-    return render_template('success.html')
+    return redirect(url_for('user.product'))
+
+
+
+
+
+@user.route('/orders_list')
+def orders():
+    try:
+        orders_tuple = view_all_orders()
+        return render_template('orders.html', orders=orders_tuple)
+    except:
+        return render_template('orders.html', orders=['ERROR'])
+
+@user.route('/logging_file')
+def logging_file():
+    try:
+        logging_lines = read_in_logging()
+        split_logs = [log.split(' | ') for log in logging_lines]
+        return render_template('logging.html', logs=split_logs)
+    except:
+        return render_template('logging.html', logs=['ERROR'])
