@@ -22,7 +22,7 @@ def send_email(corps):
         message['Subject'] = sujet
         
         # Ajouter le corps du message
-        message.attach(MIMEText(corps, 'plain'))
+        message.attach(MIMEText(f'gourde-shop - {corps}', 'plain'))
         
         # Envoyer l'email
         serveur_smtp.send_message(message)
